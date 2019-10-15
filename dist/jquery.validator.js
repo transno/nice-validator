@@ -252,6 +252,7 @@
     function Validator(element, options) {
         var me = this;
 
+        console.log('Creates a new Validator')
         if ( !(me instanceof Validator) ) {
             return new Validator(element, options);
         }
@@ -278,6 +279,7 @@
             var me = this,
                 opt, themeOpt, dataOpt;
 
+                console.log('_init')
             // Initialization options
             if ( isFunction(options) ) {
                 options = {
@@ -299,6 +301,8 @@
             me.fields = {};
             // Initialization fields
             me._initFields(opt.fields);
+
+            console.log(opt)
 
             // Initialization events and make a cache
             if ( !me.$el.data(NS) ) {
@@ -327,6 +331,21 @@
             // Display all messages in target container
             if ( isString(opt.target) ) {
                 me.$el.find(opt.target).addClass('msg-container');
+            }
+
+            if (opt.showTip) {
+                var len = me.$el[0].length
+                for (var i = 0; i < len; i++) {
+                    var el = me.$el[0][i],
+                        msg = attr(el, DATA_TIP);
+
+                    if (msg) {
+                        me.showMsg(el, {
+                            type: 'tip',
+                            msg: msg
+                        })
+                    }
+                }
             }
         },
 
@@ -1401,6 +1420,7 @@
      * @return {Function}   Factory
      */
     function _createFieldFactory(context) {
+        console.log('Create Field Factory')
         function FieldFactory() {
             var options = this.options;
             for (var i in options) {
@@ -1647,11 +1667,13 @@
 
     // Fixed a issue cause by refresh page in IE.
     $(window).on('beforeunload', function(){
+        console.log('beforeunload')
         this.focus();
     });
 
     $(document)
     .on('click', ':submit', function(){
+        console.log('click')
         var input = this, attrNode;
         if (!input.form) return;
         // Shim for "formnovalidate"
@@ -1666,6 +1688,7 @@
         var $form = $(this), me;
 
         if ( !$form.data(NS) && (me = _getInstance(this)) ) {
+            console.log(me)
             if ( !$.isEmptyObject(me.fields) ) {
                 // Execute event handler
                 if (e.type === 'focusin') {

@@ -10,10 +10,16 @@
 
 <form id="form1" class="form">
     <div class="form-item">
-        <input type="text" name="user[email]" data-rule="required;email" placeholder="Email">
+        <input type="text" name="user[email]" data-rule="required;email" placeholder="Email" data-tip="please enter your email">
     </div>
     <div class="form-item">
         <input type="password" name="password" data-rule="required;" placeholder="Password">
+    </div>
+    <div>
+        <select name="select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
     </div>
     <div class="form-item">
         <button type="submit">Submit</button>
@@ -40,7 +46,8 @@ require(['jquery', 'validator'], function($){
     $('#form1').validator({
         timely: 2,
         stopOnError: true,
-        theme: 'yellow_right'
+        theme: 'yellow_right',
+        showTip: true
     });
 });
 
